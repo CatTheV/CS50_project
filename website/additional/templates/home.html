@@ -1,0 +1,55 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %}
+
+{% block content %}
+<br />
+<h1 align="left">Here you can read positive messages of Twitter users</h1>
+<br />
+<h2 align="left">Choose your topic</h2>
+<p><small>Please, don't write "Finance" for the sake of the author.</small></p>
+{% if suggestion %}
+<p align="left">Did you mean to input <i>"{{ suggestion }}"</i>?</p>
+{% endif %}
+
+
+<form method="POST">
+
+    <input type="topic" class="form-control" id="topic" name="topic" placeholder="Provide with a topic (one word)" />
+
+    <div align="left">
+        <br />
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+
+
+{% if not result.empty %}
+
+<br/>
+{% for i in range(0, result.shape[0]) %}
+<p><a href="https://twitter.com/anyone/status/{{result.iloc[i, 0]}}" target="_blank">Visit the actual tweet.</a></p>
+<li class="list-group-item">
+{{ result.iloc[i, 4] }}
+</li>
+<br />
+{% endfor %}
+
+
+
+
+<br/>
+<br/>
+<h3 align="left"> The most "positive" publisher</h3>
+{{ pos_user }}
+<br/>
+
+<br/>
+<h3 align="left"> The most positive and negative tweets</h3>
+<li class="list-group-item">
+    <p>Positive: {{extremes[0]}}</p></li>
+<li class="list-group-item">
+    <p>Negative: {{extremes[1]}}</p>
+</li>
+<br/>
+{% endif %}
+
+{% endblock %}
